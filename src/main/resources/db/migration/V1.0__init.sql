@@ -1,0 +1,1 @@
+CREATE ROLE lenny_user WITH LOGIN PASSWORD 'lenny';
