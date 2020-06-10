@@ -21,7 +21,11 @@ repositories {
 dependencies {
 
 	// Web endpoint specific
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-jersey'
+	implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-xml-provider'
+
+	// actuator stuff
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 	// On startup, configure database connection and connect
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
