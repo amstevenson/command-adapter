@@ -37,4 +37,19 @@ public class CommandAdapterService implements CommandAdapterResource {
                 }
         );
     }
+
+    @Override
+    public Response getCommand(String channelName,
+                               String commandName) {
+        return jdbi.withHandle(handle -> {
+
+                System.out.println("******** " + channelName + " " + commandName + " ********");
+
+                CommandDao commandDao = handle.attach(CommandDao.class);
+
+                return Response.ok(commandDao.getCommand(channelName,
+                commandName)).build();
+            }
+        );
+    }
 }

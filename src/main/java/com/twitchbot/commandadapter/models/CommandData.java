@@ -1,7 +1,11 @@
 package com.twitchbot.commandadapter.models;
 
+import java.sql.Date;
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+import org.springframework.data.relational.core.mapping.Embedded.Nullable;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CommandData {
@@ -11,6 +15,9 @@ public class CommandData {
     private String commandName;
 
     private String commandBody;
+
+    @Nullable
+    private Date commandAdded;
 
     private String commandAddedBy;
 
@@ -44,5 +51,13 @@ public class CommandData {
 
     public void setCommandAddedBy(String commandAddedBy) {
         this.commandAddedBy = commandAddedBy;
+    }
+
+    public Date getCommandAdded() {
+        return commandAdded;
+    }
+
+    public void setCommandAddedBy(Date commandAdded) {
+        this.commandAdded = commandAdded;
     }
 }
