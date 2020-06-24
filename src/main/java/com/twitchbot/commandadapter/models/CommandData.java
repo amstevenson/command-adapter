@@ -5,8 +5,6 @@ import java.sql.Date;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-import org.springframework.data.relational.core.mapping.Embedded.Nullable;
-
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CommandData {
 
@@ -16,7 +14,6 @@ public class CommandData {
 
     private String commandBody;
 
-    @Nullable
     private Date commandAdded;
 
     private String commandAddedBy;
@@ -57,7 +54,7 @@ public class CommandData {
         return commandAdded;
     }
 
-    public void setCommandAddedBy(Date commandAdded) {
+    public void setCommandAdded(Date commandAdded) {
         this.commandAdded = commandAdded;
     }
 }

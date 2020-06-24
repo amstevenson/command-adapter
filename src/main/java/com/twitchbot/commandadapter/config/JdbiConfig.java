@@ -1,5 +1,6 @@
 package com.twitchbot.commandadapter.config;
 
+import com.twitchbot.commandadapter.database.CommandDao;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,11 @@ public class JdbiConfig {
         Jdbi jdbi = Jdbi.create(new TransactionAwareDataSourceProxy(ds));
         jdbi.installPlugin(new SqlObjectPlugin());
         return jdbi;
+    }
+
+    @Bean
+    public CommandDao commandDao(Jdbi jdbi) {
+        return jdbi.onDemand(CommandDao.class);
     }
 
 }

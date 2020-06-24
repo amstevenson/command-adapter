@@ -1,5 +1,6 @@
 package com.twitchbot.commandadapter.database;
 
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -23,7 +24,7 @@ public interface CommandDao {
         @SqlQuery("SELECT channel_name, command_name, command_body, command_added," + 
          " command_added_by FROM command WHERE" +
         " channel_name = :channelName AND command_name = :commandName")
+        @RegisterBeanMapper(CommandData.class)
         CommandData getCommand(@Bind("channelName") String channelName,
-                                @Bind("commandName") String commandName);               
-
+                                @Bind("commandName") String commandName);
 }
