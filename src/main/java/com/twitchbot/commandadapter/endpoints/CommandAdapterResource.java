@@ -20,4 +20,13 @@ public interface CommandAdapterResource {
     @GET
     Response getCommand(@PathParam("channel_name") String channelName,
                         @PathParam("command_name") String commandName);
+
+    @Path("/channel/{channel_name}/commands")
+    @GET
+    Response getAllCommands(@PathParam("channel_name") String channelName);
+
+    @Path("/channel/{channel_name}/command/{command_name}")
+    @DELETE
+    Response deleteCommand(@PathParam("channel_name") String channelName,
+                        @PathParam("command_name") String commandName);
 }

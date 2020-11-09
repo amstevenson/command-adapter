@@ -57,4 +57,9 @@ public class CommandData {
     public void setCommandAdded(Date commandAdded) {
         this.commandAdded = commandAdded;
     }
+
+    @Override
+    public String toString() {
+        return "Channel Name: " + channelName + " - Command Name: " + commandName + " - Command Body: " + commandBody + " - Command Added: " + commandAdded + " - Command Added By: " + commandAddedBy;
+    }
 }
