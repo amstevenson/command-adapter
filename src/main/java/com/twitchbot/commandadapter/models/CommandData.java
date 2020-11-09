@@ -60,6 +60,7 @@ public class CommandData {
 
     @Override
     public String toString() {
-        return "Channel Name: " + channelName + " - Command Name: " + commandName + " - Command Body: " + commandBody + " - Command Added: " + commandAdded + " - Command Added By: " + commandAddedBy;
+        return "Channel Name: " + channelName + " - Command Name: " + commandName + " - Command Body: " +
+                commandBody + " - Command Added: " + commandAdded + " - Command Added By: " + commandAddedBy;
     }
 }

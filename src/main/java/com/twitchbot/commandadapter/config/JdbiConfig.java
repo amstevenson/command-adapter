@@ -23,5 +23,4 @@ public class JdbiConfig {
     public CommandDao commandDao(Jdbi jdbi) {
         return jdbi.onDemand(CommandDao.class);
     }
-
 }

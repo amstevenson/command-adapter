@@ -28,5 +28,5 @@ public interface CommandAdapterResource {
     @Path("/channel/{channel_name}/command/{command_name}")
     @DELETE
     Response deleteCommand(@PathParam("channel_name") String channelName,
-                        @PathParam("command_name") String commandName);
+                           @PathParam("command_name") String commandName);
 }
