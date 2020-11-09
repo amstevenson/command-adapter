@@ -8,8 +8,8 @@ import javax.ws.rs.core.Response;
 
 @Component
 @Path("/v1")
-@Consumes({"application/json", "text/xml", "application/xml"})
-@Produces({"application/json", "text/xml", "application/xml"})
+@Consumes({"application/json"})
+@Produces({"application/json"})
 public interface CommandAdapterResource {
 
     @Path("/command")
