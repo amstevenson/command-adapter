@@ -18,8 +18,7 @@ public class CommandAdapterService implements CommandAdapterResource {
     private final Jdbi jdbi;
 
     @Autowired
-    public CommandAdapterService(
-            Jdbi jdbi) {
+    public CommandAdapterService(Jdbi jdbi) {
         this.jdbi = jdbi;
     }
 
@@ -27,18 +26,23 @@ public class CommandAdapterService implements CommandAdapterResource {
     public Response insertCommand(CommandData commandData) {
         return jdbi.withHandle(handle -> {
 
-                    System.out.println("Insert command - " + commandData.toString());
+            System.out.println("Insert command - " + commandData.toString());
 
-                    CommandDao commandDao = handle.attach(CommandDao.class);
-                    commandDao.insertCommand(commandData.getChannelName(),
-                            commandData.getCommandName(),
-                            commandData.getCommandBody(),
-                            LocalDateTime.now(),
-                            commandData.getCommandAddedBy());
+            CommandDao commandDao = handle.attach(CommandDao.class);
+            commandDao.insertCommand(commandData.getChannelName(), commandData.getCommandName(),
+                    commandData.getCommandBody(), commandData.getCommandAdded(), commandData.getCommandAddedBy());
 
-                    return Response.accepted().build();
-                }
-        );
+            Optional<CommandData> addedCommand = commandDao.getCommand(commandData.getChannelName(),
+                    commandData.getCommandName());
+
+            // If we do not have a command
+            if (addedCommand.isEmpty())
+                return Response.status(Response.Status.NOT_FOUND).entity(String
+                        .format("Command not found. Command name: %s, channel name %s ", commandData.getChannelName(),  commandData.getCommandName()))
+                        .build();
+
+            return Response.accepted().entity(addedCommand.get()).build();
+        });
     }
 
     @Override
@@ -52,9 +56,9 @@ public class CommandAdapterService implements CommandAdapterResource {
 
             // If we do not have a command
             if (command.isEmpty())
-                return Response.status(Response.Status.NOT_FOUND).entity(
-                        String.format("Command not found. Command name: %s, channel name %s ",
-                                channelName, commandName)).build();
+                return Response.status(Response.Status.NOT_FOUND).entity(String
+                        .format("Command not found. Command name: %s, channel name %s ", channelName, commandName))
+                        .build();
 
             return Response.status(Response.Status.OK).entity(command.get()).build();
         });
@@ -74,8 +78,7 @@ public class CommandAdapterService implements CommandAdapterResource {
     }
 
     @Override
-    public Response deleteCommand(String channelName,
-                                  String commandName) {
+    public Response deleteCommand(String channelName, String commandName) {
 
         System.out.println("Delete Command: " + channelName + " " + commandName);
 
@@ -85,9 +88,9 @@ public class CommandAdapterService implements CommandAdapterResource {
 
             // If we do not have a command
             if (command.isEmpty())
-                return Response.status(Response.Status.NOT_FOUND).entity(
-                        String.format("Command not found. Command name: %s, channel name %s ",
-                                commandName, channelName)).build();
+                return Response.status(Response.Status.NOT_FOUND).entity(String
+                        .format("Command not found. Command name: %s, channel name %s ", commandName, channelName))
+                        .build();
 
             commandDao.deleteCommand(channelName, commandName);
             System.out.println("Success! Command Deleted");

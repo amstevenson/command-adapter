@@ -1,6 +1,6 @@
 package com.twitchbot.commandadapter.models;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -14,7 +14,7 @@ public class CommandData {
 
     private String commandBody;
 
-    private Date commandAdded;
+    private LocalDateTime commandAdded;
 
     private String commandAddedBy;
 
@@ -50,11 +50,11 @@ public class CommandData {
         this.commandAddedBy = commandAddedBy;
     }
 
-    public Date getCommandAdded() {
+    public LocalDateTime getCommandAdded() {
         return commandAdded;
     }
 
-    public void setCommandAdded(Date commandAdded) {
+    public void setCommandAdded(LocalDateTime commandAdded) {
         this.commandAdded = commandAdded;
     }
 
