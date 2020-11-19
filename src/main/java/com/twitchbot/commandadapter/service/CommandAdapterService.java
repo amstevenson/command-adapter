@@ -8,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.Response;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class CommandAdapterService implements CommandAdapterResource {
 
     private final Jdbi jdbi;
+    private static final Logger logger = LoggerFactory.getLogger(CommandAdapterService.class);
 
     @Autowired
     public CommandAdapterService(Jdbi jdbi) {
@@ -26,7 +29,7 @@ public class CommandAdapterService implements CommandAdapterResource {
     public Response insertCommand(CommandData commandData) {
         return jdbi.withHandle(handle -> {
 
-            System.out.println("Insert command - " + commandData.toString());
+            logger.info("Insert command - " + commandData.toString());
 
             CommandDao commandDao = handle.attach(CommandDao.class);
             commandDao.insertCommand(commandData.getChannelName(), commandData.getCommandName(),
@@ -48,7 +51,7 @@ public class CommandAdapterService implements CommandAdapterResource {
     @Override
     public Response getCommand(String channelName, String commandName) {
 
-        System.out.println("get command - " + channelName + " " + commandName);
+        logger.info("get command - {} {}", channelName, commandName);
 
         return jdbi.withHandle(handle -> {
             CommandDao commandDao = handle.attach(CommandDao.class);
@@ -67,7 +70,7 @@ public class CommandAdapterService implements CommandAdapterResource {
     @Override
     public Response getAllCommands(String channelName) {
 
-        System.out.println("Get All Commands! " + channelName);
+        logger.info("Get All Commands! {}", channelName);
 
         return jdbi.withHandle(handle -> {
             CommandDao commandDao = handle.attach(CommandDao.class);
@@ -80,7 +83,7 @@ public class CommandAdapterService implements CommandAdapterResource {
     @Override
     public Response deleteCommand(String channelName, String commandName) {
 
-        System.out.println("Delete Command: " + channelName + " " + commandName);
+        logger.info("Delete Command: {} {}", channelName, commandName);
 
         return jdbi.withHandle(handle -> {
             CommandDao commandDao = handle.attach(CommandDao.class);
