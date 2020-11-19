@@ -3,6 +3,7 @@ package com.twitchbot.commandadapter.service;
 import com.twitchbot.commandadapter.database.CommandDao;
 import com.twitchbot.commandadapter.endpoints.CommandAdapterResource;
 import com.twitchbot.commandadapter.models.CommandData;
+import com.twitchbot.commandadapter.models.HistoryData;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class CommandAdapterService implements CommandAdapterResource {
     public Response insertCommand(CommandData commandData) {
         return jdbi.withHandle(handle -> {
 
-            logger.info("Insert command - " + commandData.toString());
+            logger.info("Insert command - {}", commandData.toString());
 
             CommandDao commandDao = handle.attach(CommandDao.class);
             commandDao.insertCommand(commandData.getChannelName(), commandData.getCommandName(),
@@ -44,7 +45,12 @@ public class CommandAdapterService implements CommandAdapterResource {
                         .format("Command not found. Command name: %s, channel name %s ", commandData.getChannelName(),  commandData.getCommandName()))
                         .build();
 
-            return Response.accepted().entity(addedCommand.get()).build();
+
+            CommandData addedCommandData = addedCommand.get();
+            HistoryData historyData = new HistoryData(addedCommandData);
+            logger.debug("history data - {}", historyData.toString());
+            commandDao.insertCommandHistory(historyData);
+            return Response.accepted().entity(addedCommandData).build();
         });
     }
 
